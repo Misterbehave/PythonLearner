@@ -1,0 +1,52 @@
+import random
+
+def is_win(player, opponent):
+    # win conditions
+    return (player == 'r' and opponent == 's') or (player == 'p' and opponent == 'r') or (player == 's' and opponent == 'p')
+
+def play_round():
+    user = input("What is your choice? 'r' for rock, 'p' for paper, 's' for scissors\n")
+    
+    if user not in ['r', 'p', 's']:
+        print("Invalid choice. Please enter 'r', 'p', or 's'.")
+        return None
+
+    computer = random.choice(['r', 'p', 's'])
+    print(f"Computer chose {computer}")
+
+    if user == computer: 
+        return "tie"
+    if is_win(user, computer):
+        return 'user'
+    return 'computer'
+##stores points 
+def play_series():
+    user_score = 0
+    computer_score = 0
+
+    while user_score < 3 and computer_score < 3:
+        result = play_round()
+        
+        if result == 'user':
+            user_score += 1
+            print("You win this round!")
+        elif result == 'computer':
+            computer_score += 1
+            print("You lose this round.")
+        elif result == 'tie':
+            print("It's a tie.")
+        
+        print(f"Score: You {user_score} - Computer {computer_score}")
+
+    if user_score == 3:
+        print("You won the best of 5 series!")
+    else:
+        print("Computer won the best of 5 series!")
+
+def main():
+    play_again = 'y'
+    while play_again.lower() == 'y':
+        play_series()
+        play_again = input("Do you want to play again? (y/n): ")
+
+main()
