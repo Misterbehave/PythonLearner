@@ -1,0 +1,22 @@
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+# Specifying the URL
+url = "https://www.nfl.com/stats/player-stats/"
+
+# Fetching the page
+page = urlopen(url)
+html = page.read().decode("utf-8")
+
+# Parsing the HTML content
+soup = BeautifulSoup(html, "lxml")
+
+# Finding the table - replace 'table_class' with the actual class name of the table
+table = soup.find("table", {"class": "table_class"})
+
+# Extracting data from the table
+for row in table.find_all("tr"):
+    columns = row.find_all("td")
+    # Extract and process data from each cell
+    data = [col.get_text() for col in columns]
+    print(data)
